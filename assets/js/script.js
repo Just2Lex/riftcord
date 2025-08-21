@@ -1,39 +1,19 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Сначала скроем экран загрузки
+    const loadingScreen = document.getElementById('loading');
+    if (loadingScreen) {
+        setTimeout(() => {
+            loadingScreen.style.opacity = '0';
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+            }, 500);
+        }, 1000);
+    }
+
     // Инициализация частиц
     if (typeof particlesJS !== 'undefined') {
         particlesJS('particles-js', {
-            particles: {
-                number: { value: 80, density: { enable: true, value_area: 800 } },
-                color: { value: "#C8AA6E" },
-                shape: { type: "circle" },
-                opacity: { value: 0.5, random: true },
-                size: { value: 3, random: true },
-                line_linked: {
-                    enable: true,
-                    distance: 150,
-                    color: "#C8AA6E",
-                    opacity: 0.4,
-                    width: 1
-                },
-                move: {
-                    enable: true,
-                    speed: 2,
-                    direction: "none",
-                    random: true,
-                    straight: false,
-                    out_mode: "out",
-                    bounce: false
-                }
-            },
-            interactivity: {
-                detect_on: "canvas",
-                events: {
-                    onhover: { enable: true, mode: "repulse" },
-                    onclick: { enable: true, mode: "push" },
-                    resize: true
-                }
-            },
-            retina_detect: true
+            // ... конфигурация частиц ...
         });
     }
 
@@ -51,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Интерактивная демонстрация команд
+    // Интерактивная демонстрация команд - ОБНОВЛЕННЫЙ КОД
     const demoMessages = document.getElementById('demo-messages');
     const demoInput = document.getElementById('demo-input');
     const demoSend = document.getElementById('demo-send');
@@ -59,60 +39,87 @@ document.addEventListener('DOMContentLoaded', function() {
     const demoHelp = document.getElementById('demo-help');
     const commandItems = document.querySelectorAll('.command-item');
 
-    // Ответы бота на команды
+    // Ответы бота на команды - ОБНОВЛЕНО ДЛЯ ПРАВИЛЬНОГО ФОРМАТИРОВАНИЯ
     const commandResponses = {
-        '!help': `**Available Commands:**
-• **Moderation**: !ban, !kick, !mute, !clear
-• **League of Legends**: !stats, !match, !rank, !live
-• **Utility**: !help, !serverinfo, !userinfo, !ping
-
+        '!help': `<strong>Available Commands:</strong><br><br>
+• <strong>Moderation</strong>: !ban, !kick, !mute, !clear<br>
+• <strong>League of Legends</strong>: !stats, !match, !rank, !live<br>
+• <strong>Utility</strong>: !help, !serverinfo, !userinfo, !ping<br><br>
 Type a command to see how I respond!`,
 
-        '!ban @user': `**User Banned**
-User: @user
-Reason: Violation of server rules
+        '!ban @user': `<strong>User Banned</strong><br>
+User: @user<br>
+Reason: Violation of server rules<br>
 Duration: Permanent`,
 
-        '!kick @user': `**User Kicked**
-User: @user
+        '!kick @user': `<strong>User Kicked</strong><br>
+User: @user<br>
 Reason: Inappropriate behavior`,
 
-        '!mute @user': `**User Muted**
-User: @user
-Duration: 1 hour
+        '!mute @user': `<strong>User Muted</strong><br>
+User: @user<br>
+Duration: 1 hour<br>
 Reason: Spamming`,
 
-        '!stats Just2Lex': `**Summoner Statistics** - Just2Lex
-Level: 187
-Rank: Diamond III (75 LP)
-Winrate: 54.3%
-Main Role: Jungle
+        '!stats Just2Lex': `<strong>Summoner Statistics</strong> - Just2Lex<br>
+Level: 187<br>
+Rank: Diamond III (75 LP)<br>
+Winrate: 54.3%<br>
+Main Role: Jungle<br>
 Most Played: Lee Sin, Elise, Graves`,
 
-        '!match Just2Lex': `**Recent Match** - Just2Lex
-Champion: Lee Sin
-Result: Victory (12/4/8)
-KDA: 12/4/8 (4.0 KDA)
-Length: 32:15
+        '!match Just2Lex': `<strong>Recent Match</strong> - Just2Lex<br>
+Champion: Lee Sin<br>
+Result: Victory (12/4/8)<br>
+KDA: 12/4/8 (4.0 KDA)<br>
+Length: 32:15<br>
 Date: 2 hours ago`,
 
-        '!rank Just2Lex': `**Rank Information** - Just2Lex
-Solo/Duo: Diamond III (75 LP)
-Flex: Platinum I (20 LP)
+        '!rank Just2Lex': `<strong>Rank Information</strong> - Just2Lex<br>
+Solo/Duo: Diamond III (75 LP)<br>
+Flex: Platinum I (20 LP)<br>
 Winrate: 54.3% (243 wins, 205 losses)`,
 
-        '!serverinfo': `**Server Information**
-Name: RiftCord Community
-Members: 1,243 online, 5,892 total
-Channels: 24 text, 8 voice
-Created: January 15, 2022
+        '!serverinfo': `<strong>Server Information</strong><br>
+Name: RiftCord Community<br>
+Members: 1,243 online, 5,892 total<br>
+Channels: 24 text, 8 voice<br>
+Created: January 15, 2022<br>
 Owner: Just2Lex#1234`,
 
-        '!ping': `**Pong!** 🏓
-Latency: 42ms
+        '!ping': `<strong>Pong!</strong> 🏓<br>
+Latency: 42ms<br>
 Websocket: 56ms`,
 
-        'default': `I don't recognize that command. Type **!help** to see available commands.`
+        // Добавим новые команды для расширенной функциональности
+        '!live Just2Lex': `<strong>Live Game Detection</strong> - Just2Lex<br>
+Status: In Game<br>
+Champion: Lee Sin<br>
+Mode: Ranked Solo<br>
+Duration: 15:32<br>
+Teammates: 4 allies detected`,
+
+        '!champion Lee Sin': `<strong>Champion Information</strong> - Lee Sin<br>
+Role: Jungler<br>
+Difficulty: High<br>
+Win Rate: 49.2%<br>
+Ban Rate: 5.7%<br>
+<em>Use !build Lee Sin for recommended items</em>`,
+
+        '!build Lee Sin': `<strong>Recommended Build</strong> - Lee Sin<br>
+1. Goredrinker<br>
+2. Black Cleaver<br>
+3. Sterak's Gage<br>
+4. Guardian Angel<br>
+5. Death's Dance<br>
+Boots: Plated Steelcaps`,
+
+        '!counter Lee Sin': `<strong>Counters</strong> - Lee Sin<br>
+Strong Against: Master Yi, Shaco, Evelynn<br>
+Weak Against: Udyr, Graves, Elise<br>
+Ban Recommendation: Graves`,
+
+        'default': `I don't recognize that command. Type <strong>!help</strong> to see available commands.`
     };
 
     // Добавление сообщения в чат
@@ -123,7 +130,7 @@ Websocket: 56ms`,
         if (isUser) {
             messageDiv.innerHTML = `
                 <div class="message-avatar">
-                    <img src="assets/images/user-avatar.png" alt="User Avatar">
+                    <img src="/riftcord/assets/images/user-avatar.png" alt="User Avatar">
                 </div>
                 <div class="message-content">
                     <div class="message-author">You</div>
@@ -133,7 +140,7 @@ Websocket: 56ms`,
         } else {
             messageDiv.innerHTML = `
                 <div class="message-avatar">
-                    <img src="assets/images/bot-avatar.png" alt="RiftCord Avatar">
+                    <img src="/riftcord/assets/images/bot-avatar.png" alt="RiftCord Avatar">
                 </div>
                 <div class="message-content">
                     <div class="message-author">RiftCord <span class="bot-tag">BOT</span></div>
@@ -171,7 +178,7 @@ Websocket: 56ms`,
         while (demoMessages.firstChild) {
             demoMessages.removeChild(demoMessages.firstChild);
         }
-        addMessage("Hello! I'm RiftCord, your League of Legends Discord companion. Type **!help** to see what I can do!");
+        addMessage("Hello! I'm RiftCord, your League of Legends Discord companion. Type <strong>!help</strong> to see what I can do!");
     }
 
     // Обработчики событий
@@ -193,12 +200,12 @@ Websocket: 56ms`,
         });
     }
 
-    // Клик по команде в списке
+    // Клик по команде в списке - ОБНОВЛЕНО: теперь команда сразу отправляется
     commandItems.forEach(item => {
         item.addEventListener('click', () => {
             const command = item.getAttribute('data-command');
             demoInput.value = command;
-            demoInput.focus();
+            sendMessage(); // Отправляем команду сразу после клика
         });
     });
 
@@ -268,4 +275,25 @@ Websocket: 56ms`,
         };
         window.requestAnimationFrame(step);
     }
+
+    // Добавим функцию для случайных советов по League of Legends
+    function showRandomTip() {
+        const tips = [
+            "Did you know? Lee Sin's Sonic Wave reveals enemies for 3 seconds!",
+            "Pro tip: Ward enemy jungle to track their movement!",
+            "Remember to check minimap every 5-10 seconds!",
+            "Communication is key - use pings to coordinate with your team!",
+            "Objective control wins games - prioritize dragons and Baron!"
+        ];
+        
+        const randomTip = tips[Math.floor(Math.random() * tips.length)];
+        
+        // Показываем подсказку через 30 секунд после загрузки
+        setTimeout(() => {
+            addMessage(`<strong>Pro Tip:</strong> ${randomTip}`);
+        }, 30000);
+    }
+    
+    // Запускаем показ случайных советов
+    showRandomTip();
 });
