@@ -1,153 +1,228 @@
-// Демо-чат функционал
+// Основной функционал сайта
 document.addEventListener('DOMContentLoaded', function() {
-    // Глобальная функция для добавления сообщений в демо-чат
-    window.addDemoMessage = function(content, isUser = false) {
-        const demoChat = document.querySelector('.demo-chat');
-        if (!demoChat) return;
-        
-        const messageDiv = document.createElement('div');
-        messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
-        
-        if (isUser) {
-            messageDiv.innerHTML = `
-                <div class="message-avatar">
-                    <img src="assets/images/user-avatar.png" alt="User Avatar">
-                </div>
-                <div class="message-content">
-                    <div class="message-author">You</div>
-                    <div class="message-text">${content}</div>
-                </div>
-            `;
-        } else {
-            messageDiv.innerHTML = `
-                <div class="message-avatar">
-                    <img src="assets/images/bot-avatar.png" alt="RiftCord Avatar">
-                </div>
-                <div class="message-content">
-                    <div class="message-author">RiftCord <span class="bot-tag">BOT</span></div>
-                    <div class="message-text">${content}</div>
-                </div>
-            `;
-        }
-        
-        demoChat.appendChild(messageDiv);
-        demoChat.scrollTop = demoChat.scrollHeight;
-        
-        // Анимация печатания для сообщений бота
-        if (!isUser) {
-            const messageText = messageDiv.querySelector('.message-text');
-            messageText.classList.add('typing');
-            setTimeout(() => {
-                messageText.classList.remove('typing');
-            }, 1000);
-        }
-    };
+    // Инициализация
+    initParticles();
+    initChampionIcons();
+    initNavigation();
+    initScrollAnimations();
+    initDemoChat();
+    initModal();
+    hideLoadingScreen();
     
-    // Инициализация демо-чата
-    function initDemoChat() {
-        const demoScenarios = document.querySelectorAll('.demo-scenario-btn');
-        demoScenarios.forEach(btn => {
-            btn.addEventListener('click', () => {
-                // Убираем активный класс у всех кнопок
-                demoScenarios.forEach(b => b.classList.remove('active'));
-                // Добавляем активный класс к текущей кнопке
-                btn.classList.add('active');
-                
-                // Загружаем соответствующий сценарий
-                const scenario = btn.getAttribute('data-scenario');
-                loadDemoScenario(scenario);
+    // Инициализация частиц
+    function initParticles() {
+        if (typeof particlesJS !== 'undefined') {
+            particlesJS('particles-js', {
+                particles: {
+                    number: { value: 80, density: { enable: true, value_area: 800 } },
+                    color: { value: "#C8AA6E" },
+                    shape: { type: "circle" },
+                    opacity: { value: 0.5, random: true },
+                    size: { value: 3, random: true },
+                    line_linked: {
+                        enable: true,
+                        distance: 150,
+                        color: "#C8AA6E",
+                        opacity: 0.4,
+                        width: 1
+                    },
+                    move: {
+                        enable: true,
+                        speed: 2,
+                        direction: "none",
+                        random: true,
+                        straight: false,
+                        out_mode: "out",
+                        bounce: false
+                    }
+                },
+                interactivity: {
+                    detect_on: "canvas",
+                    events: {
+                        onhover: { enable: true, mode: "repulse" },
+                        onclick: { enable: true, mode: "push" },
+                        resize: true
+                    }
+                },
+                retina_detect: true
+            });
+        }
+    }
+    
+    // Инициализация иконок чемпионов
+    function initChampionIcons() {
+        const championIcons = document.querySelectorAll('.champion-icon');
+        championIcons.forEach(icon => {
+            icon.addEventListener('click', () => {
+                const champion = icon.getAttribute('data-champion');
+                showChampionModal(champion);
+            });
+        });
+    }
+    
+    // Показ модального окна с информацией о чемпионе
+    function showChampionModal(champion) {
+        const modal = document.getElementById('champion-modal');
+        const championData = getChampionData(champion);
+        
+        if (championData) {
+            document.getElementById('modal-champion-name').textContent = championData.name;
+            document.getElementById('modal-champion-role').textContent = championData.role;
+            document.getElementById('modal-champion-difficulty').textContent = championData.difficulty;
+            
+            const abilitiesList = document.getElementById('modal-champion-abilities');
+            abilitiesList.innerHTML = '';
+            
+            championData.abilities.forEach(ability => {
+                const li = document.createElement('li');
+                li.textContent = ability;
+                abilitiesList.appendChild(li);
+            });
+            
+            // Установка изображения (заглушка)
+            document.getElementById('modal-champion-img').src = `assets/images/champions/${champion}.jpg`;
+            document.getElementById('modal-champion-img').alt = championData.name;
+            
+            modal.style.display = 'flex';
+        }
+    }
+    
+    // Данные о чемпионах (заглушка)
+    function getChampionData(champion) {
+        const champions = {
+            'lee-sin': {
+                name: 'Lee Sin',
+                role: 'Jungler',
+                difficulty: 'High',
+                abilities: ['Sonic Wave', 'Safeguard', 'Tempest', 'Dragon\'s Rage']
+            },
+            'ahri': {
+                name: 'Ahri',
+                role: 'Mid Laner',
+                difficulty: 'Medium',
+                abilities: ['Orb of Deception', 'Fox-Fire', 'Charm', 'Spirit Rush']
+            },
+            'yasuo': {
+                name: 'Yasuo',
+                role: 'Mid Laner',
+                difficulty: 'High',
+                abilities: ['Steel Tempest', 'Wind Wall', 'Sweeping Blade', 'Last Breath']
+            },
+            'lux': {
+                name: 'Lux',
+                role: 'Support',
+                difficulty: 'Low',
+                abilities: ['Light Binding', 'Prismatic Barrier', 'Lucent Singularity', 'Final Spark']
+            },
+            'darius': {
+                name: 'Darius',
+                role: 'Top Laner',
+                difficulty: 'Medium',
+                abilities: ['Decimate', 'Crippling Strike', 'Apprehend', 'Noxian Guillotine']
+            }
+        };
+        
+        return champions[champion] || null;
+    }
+    
+    // Инициализация модального окна
+    function initModal() {
+        const modal = document.getElementById('champion-modal');
+        const closeBtn = document.querySelector('.close-modal');
+        
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+        
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+    }
+    
+    // Инициализация навигации
+    function initNavigation() {
+        // Плавная прокрутка
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
             });
         });
         
-        // Загружаем начальный сценарий
-        loadDemoScenario('welcome');
-    }
-    
-    // Загрузка сценария демо-чата
-    function loadDemoScenario(scenario) {
-        const demoChat = document.querySelector('.demo-chat');
-        if (!demoChat) return;
-        
-        // Очищаем чат
-        demoChat.innerHTML = '';
-        
-        // Загружаем сообщения для выбранного сценария
-        switch(scenario) {
-            case 'welcome':
-                addWelcomeMessages();
-                break;
-            case 'moderation':
-                addModerationMessages();
-                break;
-            case 'stats':
-                addStatsMessages();
-                break;
-            case 'utility':
-                addUtilityMessages();
-                break;
+        // Мобильное меню
+        const hamburger = document.querySelector('.nav-hamburger');
+        if (hamburger) {
+            hamburger.addEventListener('click', () => {
+                document.querySelector('.nav-items').classList.toggle('active');
+                document.querySelector('.nav-actions').classList.toggle('active');
+                hamburger.classList.toggle('active');
+            });
         }
     }
     
-    // Сообщения для сценария приветствия
-    function addWelcomeMessages() {
-        setTimeout(() => {
-            window.addDemoMessage("Hello! I'm Bot RiftCord, your League of Legends Discord companion. Type <strong>!help</strong> to see what I can do!");
-        }, 500);
+    // Анимации при скролле
+    function initScrollAnimations() {
+        const sections = document.querySelectorAll('.lol-section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
         
-        setTimeout(() => {
-            window.addDemoMessage("I can help you with moderation, League of Legends statistics, and various utility functions for your Discord server.");
-        }, 2000);
-        
-        setTimeout(() => {
-            window.addDemoMessage("Try selecting different scenarios from the tabs above to see me in action!");
-        }, 3500);
+        sections.forEach(section => {
+            observer.observe(section);
+        });
     }
     
-    // Сообщения для сценария модерации
-    function addModerationMessages() {
-        setTimeout(() => {
-            window.addDemoMessage("Welcome to the moderation demo! Here are some things I can help with:");
-        }, 500);
-        
-        setTimeout(() => {
-            window.addDemoMessage("• Automatically detect and remove spam<br>• Manage user roles and permissions<br>• Kick or ban problematic users<br>• Keep logs of all moderation actions");
-        }, 1500);
-        
-        setTimeout(() => {
-            window.addDemoMessage("Try these commands in the demo:<br><code>!ban @user</code><br><code>!mute @user</code><br><code>!clear 10</code>");
-        }, 3500);
+    // Инициализация демо-чата
+    function initDemoChat() {
+        // Будет реализовано в demo.js
     }
     
-    // Сообщения для сценария статистики
-    function addStatsMessages() {
-        setTimeout(() => {
-            window.addDemoMessage("League of Legends statistics at your fingertips! Here's what I can show you:");
-        }, 500);
-        
-        setTimeout(() => {
-            window.addDemoMessage("• Summoner profile information<br>• Live game tracking<br>• Match history with detailed stats<br>• Champion mastery and rankings");
-        }, 1500);
-        
-        setTimeout(() => {
-            window.addDemoMessage("Try these commands in the demo:<br><code>!stats SummonerName</code><br><code>!match SummonerName</code><br><code>!rank SummonerName</code>");
-        }, 3500);
+    // Скрытие экрана загрузки
+    function hideLoadingScreen() {
+        const loadingScreen = document.getElementById('loading');
+        if (loadingScreen) {
+            setTimeout(() => {
+                loadingScreen.style.opacity = '0';
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                }, 500);
+            }, 1500);
+        }
     }
     
-    // Сообщения для сценария утилит
-    function addUtilityMessages() {
-        setTimeout(() => {
-            window.addDemoMessage("Utility commands to enhance your Discord experience:");
-        }, 500);
+    // Показ случайных советов
+    function showRandomTip() {
+        const tips = [
+            "Did you know? Lee Sin's Sonic Wave reveals enemies for 3 seconds!",
+            "Pro tip: Ward enemy jungle to track their movement!",
+            "Remember to check minimap every 5-10 seconds!",
+            "Communication is key - use pings to coordinate with your team!",
+            "Objective control wins games - prioritize dragons and Baron!"
+        ];
         
-        setTimeout(() => {
-            window.addDemoMessage("• Server information and statistics<br>• User profile lookup<br>• Custom command creation<br>• Automated welcome messages<br>• Role management and assignment");
-        }, 1500);
+        const randomTip = tips[Math.floor(Math.random() * tips.length)];
         
+        // Показываем подсказку через 30 секунд после загрузки
         setTimeout(() => {
-            window.addDemoMessage("Try these commands in the demo:<br><code>!serverinfo</code><br><code>!userinfo @user</code><br><code>!help</code>");
-        }, 3500);
+            // Добавим подсказку в демо-чат, если он инициализирован
+            if (window.addDemoMessage) {
+                window.addDemoMessage(`<strong>Pro Tip:</strong> ${randomTip}`);
+            }
+        }, 30000);
     }
     
-    // Инициализация при загрузке
-    initDemoChat();
+    // Запускаем показ случайных советов
+    showRandomTip();
 });
