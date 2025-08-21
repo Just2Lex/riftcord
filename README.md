@@ -1,4 +1,4 @@
-# Название Вашего Бота Discord
+# RiftCord Bot
 
 [![Uses Riot API](https://img.shields.io/badge/Uses-Riot%20API-red.svg)](https://developer.riotgames.com/)
 
