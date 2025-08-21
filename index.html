@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RiftCord - A Cyber Noir Discord Theme</title>
+    <title>RiftCord - Discord Bot for League of Legends</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,14 +20,19 @@
                     <a href="#features" class="nav-link">Features</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#installation" class="nav-link">Installation</a>
+                    <a href="#commands" class="nav-link">Commands</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#preview" class="nav-link">Preview</a>
+                    <a href="#setup" class="nav-link">Setup</a>
                 </li>
                 <li class="nav-item">
                     <a href="https://github.com/Just2Lex/riftcord" class="nav-link" target="_blank">
                         <i class="fab fa-github"></i> GitHub
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://discord.com/api/oauth2/authorize?client_id=YOUR_APP_ID&permissions=8&scope=bot" class="nav-link cta-nav" target="_blank">
+                        Invite Bot
                     </a>
                 </li>
             </ul>
@@ -41,11 +46,11 @@
 
     <header class="hero">
         <div class="hero-content">
-            <h1 class="hero-title">Dive into the <span class="accent-text">Rift</span></h1>
-            <p class="hero-description">A sleek, dark theme that transforms your Discord into a cybernetic void. Experience Discord like never before with our carefully crafted design.</p>
+            <h1 class="hero-title">Rift<span class="accent-text">Cord</span></h1>
+            <p class="hero-description">The ultimate Discord bot for League of Legends communities. Moderate your server, track player stats, and enhance your Discord experience with Riot API integration.</p>
             <div class="hero-buttons">
-                <a href="#installation" class="cta-button">Get Started</a>
-                <a href="#preview" class="cta-button secondary">View Preview</a>
+                <a href="#setup" class="cta-button">Get Started</a>
+                <a href="https://discord.com/api/oauth2/authorize?client_id=YOUR_APP_ID&permissions=8&scope=bot" class="cta-button secondary" target="_blank">Add to Discord</a>
             </div>
         </div>
         <div class="scroll-indicator">
@@ -56,103 +61,179 @@
     <main>
         <section id="features" class="section">
             <div class="container">
-                <h2 class="section-title">Features</h2>
+                <h2 class="section-title">Powerful Features</h2>
                 <div class="features-grid">
                     <div class="feature-card">
                         <div class="feature-icon">
-                            <i class="fas fa-paint-brush"></i>
+                            <i class="fas fa-shield-alt"></i>
                         </div>
-                        <h3>Modern Design</h3>
-                        <p>Clean lines, deep contrasts, and a sleek interface that reduces eye strain during long sessions.</p>
+                        <h3>Moderation Tools</h3>
+                        <p>Keep your server safe with automated moderation, role management, and user verification systems.</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">
-                            <i class="fas fa-code"></i>
+                            <i class="fas fa-chart-line"></i>
                         </div>
-                        <h3>Clean Code</h3>
-                        <p>Well-organized CSS with easy-to-customize variables. Change colors to match your vibe.</p>
+                        <h3>LoL Statistics</h3>
+                        <p>Track summoner stats, match history, rankings, and live game data directly from Discord.</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">
-                            <i class="fas fa-sync-alt"></i>
+                            <i class="fas fa-robot"></i>
                         </div>
-                        <h3>Regular Updates</h3>
-                        <p>Consistent improvements and compatibility updates with each Discord change.</p>
+                        <h3>Smart Automation</h3>
+                        <p>Automated welcome messages, leveling systems, and custom command responses.</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">
-                            <i class="fas fa-mobile-alt"></i>
+                            <i class="fas fa-plug"></i>
                         </div>
-                        <h3>Fully Responsive</h3>
-                        <p>Looks great on all devices. The theme adapts to different screen sizes seamlessly.</p>
+                        <h3>Riot API Integration</h3>
+                        <p>Seamless integration with Riot Games API for real-time data and authentication.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="installation" class="section dark">
+        <section id="commands" class="section dark">
             <div class="container">
-                <h2 class="section-title">Installation Guide</h2>
+                <h2 class="section-title">Command List</h2>
+                <p class="section-subtitle">Comprehensive set of commands for moderation and League of Legends stats</p>
+                
+                <div class="commands-container">
+                    <div class="command-category">
+                        <h3><i class="fas fa-gavel"></i> Moderation</h3>
+                        <div class="command-list">
+                            <div class="command-item">
+                                <code>!ban @user</code>
+                                <span>Ban a user from the server</span>
+                            </div>
+                            <div class="command-item">
+                                <code>!kick @user</code>
+                                <span>Kick a user from the server</span>
+                            </div>
+                            <div class="command-item">
+                                <code>!mute @user</code>
+                                <span>Temporarily mute a user</span>
+                            </div>
+                            <div class="command-item">
+                                <code>!clear [number]</code>
+                                <span>Delete a specified number of messages</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="command-category">
+                        <h3><i class="fab fa-riot-games"></i> League of Legends</h3>
+                        <div class="command-list">
+                            <div class="command-item">
+                                <code>!stats [summoner]</code>
+                                <span>Get summoner statistics</span>
+                            </div>
+                            <div class="command-item">
+                                <code>!match [summoner]</code>
+                                <span>Show recent match history</span>
+                            </div>
+                            <div class="command-item">
+                                <code>!rank [summoner]</code>
+                                <span>Check current rank and LP</span>
+                            </div>
+                            <div class="command-item">
+                                <code>!live [summoner]</code>
+                                <span>Check if a summoner is in game</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="command-category">
+                        <h3><i class="fas fa-cogs"></i> Utility</h3>
+                        <div class="command-list">
+                            <div class="command-item">
+                                <code>!help</code>
+                                <span>Show all available commands</span>
+                            </div>
+                            <div class="command-item">
+                                <code>!serverinfo</code>
+                                <span>Display server information</span>
+                            </div>
+                            <div class="command-item">
+                                <code>!userinfo [@user]</code>
+                                <span>Display user information</span>
+                            </div>
+                            <div class="command-item">
+                                <code>!ping</code>
+                                <span>Check bot response time</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="setup" class="section">
+            <div class="container">
+                <h2 class="section-title">Setup Guide</h2>
                 <div class="installation-steps">
                     <div class="step">
                         <div class="step-number">1</div>
                         <div class="step-content">
-                            <h3>Download BetterDiscord</h3>
-                            <p>Make sure you have BetterDiscord installed. You can get it from <a href="https://betterdiscord.app/" target="_blank">their official website</a>.</p>
+                            <h3>Invite the Bot</h3>
+                            <p>Add RiftCord to your Discord server using the invite link. Make sure to grant necessary permissions.</p>
+                            <a href="https://discord.com/api/oauth2/authorize?client_id=YOUR_APP_ID&permissions=8&scope=bot" class="cta-button small" target="_blank">Invite Now</a>
                         </div>
                     </div>
                     <div class="step">
                         <div class="step-number">2</div>
                         <div class="step-content">
-                            <h3>Download the Theme</h3>
-                            <p>Download the latest version of RiftCord from the <a href="https://github.com/Just2Lex/riftcord/releases" target="_blank">Releases page</a>.</p>
+                            <h3>Configure Settings</h3>
+                            <p>Use the <code>!setup</code> command to configure bot settings for your server and set up required channels.</p>
                         </div>
                     </div>
                     <div class="step">
                         <div class="step-number">3</div>
                         <div class="step-content">
-                            <h3>Install the Theme</h3>
-                            <p>Place the <code>RiftCord.theme.css</code> file in your BetterDiscord themes folder.</p>
-                            <p class="hint">Usually located at: <code>%appdata%/BetterDiscord/themes</code></p>
+                            <h3>Riot API Key (Optional)</h3>
+                            <p>For full LoL features, add your Riot API key using <code>!setapikey [your_key]</code> (admin only).</p>
+                            <p class="hint">Get your API key from <a href="https://developer.riotgames.com/" target="_blank">Riot Developer Portal</a></p>
                         </div>
                     </div>
                     <div class="step">
                         <div class="step-number">4</div>
                         <div class="step-content">
-                            <h3>Enable and Enjoy</h3>
-                            <p>Open Discord, go to Settings > BetterDiscord > Themes, and enable RiftCord.</p>
+                            <h3>Customize & Enjoy</h3>
+                            <p>Customize moderation settings, enable/disable features, and enjoy your enhanced Discord server!</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="preview" class="section">
+        <section id="preview" class="section dark">
             <div class="container">
-                <h2 class="section-title">Theme Preview</h2>
-                <p class="section-subtitle">See how RiftCord transforms your Discord experience</p>
+                <h2 class="section-title">Bot Preview</h2>
+                <p class="section-subtitle">See RiftCord in action</p>
                 <div class="preview-gallery">
                     <div class="preview-item">
                         <div class="preview-placeholder">
-                            <i class="fas fa-image"></i>
-                            <p>Main Interface Preview</p>
+                            <i class="fas fa-comment-alt"></i>
+                            <p>Stats Command Example</p>
                         </div>
                     </div>
                     <div class="preview-item">
                         <div class="preview-placeholder">
-                            <i class="fas fa-image"></i>
-                            <p>Server View Preview</p>
+                            <i class="fas fa-comment-alt"></i>
+                            <p>Moderation Command Example</p>
                         </div>
                     </div>
                     <div class="preview-item">
                         <div class="preview-placeholder">
-                            <i class="fas fa-image"></i>
-                            <p>Settings Preview</p>
+                            <i class="fas fa-comment-alt"></i>
+                            <p>Help Command Example</p>
                         </div>
                     </div>
                 </div>
                 <div class="preview-note">
-                    <p><i class="fas fa-info-circle"></i> Replace these placeholders with your actual screenshots</p>
+                    <p><i class="fas fa-info-circle"></i> Replace these placeholders with actual command examples from your bot</p>
                 </div>
             </div>
         </section>
@@ -163,27 +244,35 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <h3>RiftCord</h3>
-                    <p>A dark, modern theme for Discord</p>
+                    <p>A powerful Discord bot for League of Legends communities</p>
                 </div>
                 <div class="footer-section">
                     <h4>Links</h4>
                     <ul>
                         <li><a href="#features">Features</a></li>
-                        <li><a href="#installation">Installation</a></li>
-                        <li><a href="#preview">Preview</a></li>
+                        <li><a href="#commands">Commands</a></li>
+                        <li><a href="#setup">Setup</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
                     <h4>Resources</h4>
                     <ul>
                         <li><a href="https://github.com/Just2Lex/riftcord">GitHub Repository</a></li>
-                        <li><a href="https://betterdiscord.app/">BetterDiscord</a></li>
-                        <li><a href="https://discord.gg/">Discord Server</a></li>
+                        <li><a href="https://developer.riotgames.com/">Riot API</a></li>
+                        <li><a href="https://discord.com/developers/docs">Discord API</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="https://github.com/Just2Lex/riftcord/issues">Report Issues</a></li>
+                        <li><a href="https://discord.gg/">Join Discord</a></li>
+                        <li><a href="mailto:your-email@example.com">Contact</a></li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>Made with <i class="fas fa-heart"></i> by <a href="https://github.com/Just2Lex" target="_blank">Just2Lex</a> | Licensed under MIT License</p>
+                <p>Made with <i class="fas fa-heart"></i> by <a href="https://github.com/Just2Lex" target="_blank">Just2Lex</a> | This product isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing League of Legends.</p>
             </div>
         </div>
     </footer>
