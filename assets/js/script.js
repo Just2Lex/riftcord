@@ -1,17 +1,18 @@
 // Основной функционал сайта
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded, initializing scripts...');
+    
     // Инициализация
     initParticles();
     initChampionIcons();
     initNavigation();
     initScrollAnimations();
-    initDemoChat();
     initModal();
     hideLoadingScreen();
     
     // Инициализация частиц
     function initParticles() {
-        if (typeof particlesJS !== 'undefined') {
+        if (typeof particlesJS !== 'undefined' && document.getElementById('particles-js')) {
             particlesJS('particles-js', {
                 particles: {
                     number: { value: 80, density: { enable: true, value_area: 800 } },
@@ -65,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const modal = document.getElementById('champion-modal');
         const championData = getChampionData(champion);
         
-        if (championData) {
+        if (championData && modal) {
             document.getElementById('modal-champion-name').textContent = championData.name;
             document.getElementById('modal-champion-role').textContent = championData.role;
             document.getElementById('modal-champion-difficulty').textContent = championData.difficulty;
@@ -80,8 +81,11 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             
             // Установка изображения (заглушка)
-            document.getElementById('modal-champion-img').src = `assets/images/champions/${champion}.jpg`;
-            document.getElementById('modal-champion-img').alt = championData.name;
+            const championImg = document.getElementById('modal-champion-img');
+            if (championImg) {
+                championImg.src = `assets/images/champions/${champion}.jpg`;
+                championImg.alt = championData.name;
+            }
             
             modal.style.display = 'flex';
         }
@@ -130,6 +134,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const modal = document.getElementById('champion-modal');
         const closeBtn = document.querySelector('.close-modal');
         
+        if (!modal || !closeBtn) return;
+        
         closeBtn.addEventListener('click', () => {
             modal.style.display = 'none';
         });
@@ -161,9 +167,14 @@ document.addEventListener('DOMContentLoaded', function() {
         const hamburger = document.querySelector('.nav-hamburger');
         if (hamburger) {
             hamburger.addEventListener('click', () => {
-                document.querySelector('.nav-items').classList.toggle('active');
-                document.querySelector('.nav-actions').classList.toggle('active');
-                hamburger.classList.toggle('active');
+                const navItems = document.querySelector('.nav-items');
+                const navActions = document.querySelector('.nav-actions');
+                
+                if (navItems && navActions) {
+                    navItems.classList.toggle('active');
+                    navActions.classList.toggle('active');
+                    hamburger.classList.toggle('active');
+                }
             });
         }
     }
@@ -184,11 +195,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Инициализация демо-чата
-    function initDemoChat() {
-        // Будет реализовано в demo.js
-    }
-    
     // Скрытие экрана загрузки
     function hideLoadingScreen() {
         const loadingScreen = document.getElementById('loading');
@@ -201,28 +207,4 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 1500);
         }
     }
-    
-    // Показ случайных советов
-    function showRandomTip() {
-        const tips = [
-            "Did you know? Lee Sin's Sonic Wave reveals enemies for 3 seconds!",
-            "Pro tip: Ward enemy jungle to track their movement!",
-            "Remember to check minimap every 5-10 seconds!",
-            "Communication is key - use pings to coordinate with your team!",
-            "Objective control wins games - prioritize dragons and Baron!"
-        ];
-        
-        const randomTip = tips[Math.floor(Math.random() * tips.length)];
-        
-        // Показываем подсказку через 30 секунд после загрузки
-        setTimeout(() => {
-            // Добавим подсказку в демо-чат, если он инициализирован
-            if (window.addDemoMessage) {
-                window.addDemoMessage(`<strong>Pro Tip:</strong> ${randomTip}`);
-            }
-        }, 30000);
-    }
-    
-    // Запускаем показ случайных советов
-    showRandomTip();
 });

@@ -1,9 +1,21 @@
 // Демо-чат функционал
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('Demo chat initializing...');
+    
+    // Проверяем, существует ли демо-чат на странице
+    const demoChat = document.querySelector('.demo-chat');
+    if (!demoChat) {
+        console.log('Demo chat not found, skipping initialization');
+        return;
+    }
+    
     // Глобальная функция для добавления сообщений в демо-чат
     window.addDemoMessage = function(content, isUser = false) {
         const demoChat = document.querySelector('.demo-chat');
-        if (!demoChat) return;
+        if (!demoChat) {
+            console.error('Demo chat element not found!');
+            return;
+        }
         
         const messageDiv = document.createElement('div');
         messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
@@ -46,6 +58,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Инициализация демо-чата
     function initDemoChat() {
         const demoScenarios = document.querySelectorAll('.demo-scenario-btn');
+        if (demoScenarios.length === 0) return;
+        
         demoScenarios.forEach(btn => {
             btn.addEventListener('click', () => {
                 // Убираем активный класс у всех кнопок
@@ -60,7 +74,13 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         // Загружаем начальный сценарий
-        loadDemoScenario('welcome');
+        const activeScenario = document.querySelector('.demo-scenario-btn.active');
+        if (activeScenario) {
+            loadDemoScenario(activeScenario.getAttribute('data-scenario'));
+        } else if (demoScenarios.length > 0) {
+            demoScenarios[0].classList.add('active');
+            loadDemoScenario(demoScenarios[0].getAttribute('data-scenario'));
+        }
     }
     
     // Загрузка сценария демо-чата
@@ -148,6 +168,25 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 3500);
     }
     
+    // Показ случайных советов
+    function showRandomTip() {
+        const tips = [
+            "Did you know? Lee Sin's Sonic Wave reveals enemies for 3 seconds!",
+            "Pro tip: Ward enemy jungle to track their movement!",
+            "Remember to check minimap every 5-10 seconds!",
+            "Communication is key - use pings to coordinate with your team!",
+            "Objective control wins games - prioritize dragons and Baron!"
+        ];
+        
+        const randomTip = tips[Math.floor(Math.random() * tips.length)];
+        
+        // Показываем подсказку через 30 секунд после загрузки
+        setTimeout(() => {
+            window.addDemoMessage(`<strong>Pro Tip:</strong> ${randomTip}`);
+        }, 30000);
+    }
+    
     // Инициализация при загрузке
     initDemoChat();
+    showRandomTip();
 });
