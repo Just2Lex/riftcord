@@ -1,92 +1,182 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>RiftCord — League of Legends в твоём Discord</title>
-<meta name="description" content="RiftCord — Discord-бот с интеграцией Riot API: статистика LoL, модерация, авторизация и развлечения внутри Discord." />
-<link rel="icon" href="assets/images/riftcord-logo.png" />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css" />
-<meta property="og:title" content="RiftCord — League of Legends в Discord" />
-<meta property="og:description" content="Статистика LoL, модерация и авторизация прямо в Discord с ботом RiftCord." />
-<meta property="og:image" content="https://just2lex.github.io/riftcord/assets/images/riftcord-logo.png" />
-<meta property="og:url" content="https://just2lex.github.io/riftcord" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RiftCord - Discord бот для League of Legends</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-<!-- SVG icons (kept inline for simplicity) -->
-<svg style="display:none" aria-hidden>
-<symbol id="ico-discord" viewBox="0 0 24 24"><path d="M20 3.8A18 18 0 0016.5 2a13 13 0 00-.7.8A16.2 16.2 0 0012 3c-1.9 0-3.7.1-5.8.8-.2-.3-.4-.6-.7-.8A18 18 0 004 3.8C1.3 7.1.7 10.2.8 13v.5c2.3 1.6 4.4 2.3 6 2.9.1.1.2.2.3.3a11.5 11.5 0 003.7 1.9c.2 0 .4.1.6.1s.4 0 .6-.1a11.5 11.5 0 003.7-1.9c.1-.1.2-.2.3-.3 1.6-.6 3.7-1.3 6-2.9V13c.1-2.8-.5-5.9-3.2-9.2zM9.2 15.1c-.9 0-1.6-.8-1.6-1.7 0-1 .7-1.7 1.6-1.7s1.6.8 1.6 1.7c0 .9-.7 1.7-1.6 1.7zm5.6 0c-.9 0-1.6-.8-1.6-1.7 0-1 .7-1.7 1.6-1.7s1.6.8 1.6 1.7c0 .9-.7 1.7-1.6 1.7z"/></symbol>
-<symbol id="ico-invite" viewBox="0 0 24 24"><path d="M12 2l3 7 7 3-7 3-3 7-3-7-7-3 7-3z"/></symbol>
-<symbol id="ico-stats" viewBox="0 0 24 24"><path d="M3 3v18h18V3H3zm5 14H6v-7h2v7zm4 0h-2V8h2v9zm4 0h-2v-4h2v4z"/></symbol>
-<symbol id="ico-mod" viewBox="0 0 24 24"><path d="M12 2l1.5 3.5L17 7l-3 2.5L14 13l-2-1-2 1 .5-3.5L6 7l3.5-1.5L12 2z"/></symbol>
-<symbol id="ico-check" viewBox="0 0 24 24"><path d="M9 16.2l-3.5-3.5L4 14l5 5 11-11-1.5-1.5z"/></symbol>
-<symbol id="ico-copy" viewBox="0 0 24 24"><path d="M16 1H4a2 2 0 00-2 2v12h2V3h12V1zm3 4H8a2 2 0 00-2 2v14a2 2 0 002 2h11a2 2 0 002-2V7a2 2 0 00-2-2zm0 16H8V7h11v14z"/></symbol>
-</svg>
+    <header class="header">
+        <nav class="nav container">
+            <a href="#" class="logo">
+                <img src="assets/images/riftcord-logo.png" alt="RiftCord Logo">
+                <span>RiftCord</span>
+            </a>
+            <div class="nav-menu">
+                <a href="#features">Возможности</a>
+                <a href="#commands">Команды</a>
+                <a href="#about">О нас</a>
+                <a href="#contact">Контакты</a>
+            </div>
+            <button class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
 
+    <main>
+        <section class="hero">
+            <div class="hero-content container">
+                <div class="hero-text">
+                    <h1>Мощный Discord бот для <span class="highlight">League of Legends</span></h1>
+                    <p>Получите доступ к статистике, управляйте сервером и веселитесь с друзьями прямо в Discord с помощью RiftCord</p>
+                    <div class="hero-buttons">
+                        <a href="https://discord.com/oauth2/authorize?client_id=1408071786545020979" class="btn btn-primary">Добавить бота</a>
+                        <a href="https://dsc.gg/riftcord-lol" class="btn btn-secondary">Сервер поддержки</a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="assets/images/riftcord-logo.png" alt="RiftCord Bot">
+                </div>
+            </div>
+        </section>
 
-<header class="site-header">
-<div class="container header-inner">
-<a class="brand" href="/">
-<img src="assets/images/riftcord-logo.png" alt="RiftCord logo" class="logo" />
-<div class="brand-text">
-<span class="brand-name">RiftCord</span>
-<span class="brand-tag">LoL stats • Moderation • Fun</span>
-</div>
-</a>
+        <section class="partners">
+            <div class="container">
+                <h2>Интеграция с официальными сервисами</h2>
+                <div class="partner-logos">
+                    <img src="assets/images/discord-logo.svg" alt="Discord">
+                    <img src="assets/images/riot-logo.svg" alt="Riot Games">
+                </div>
+            </div>
+        </section>
 
+        <section id="features" class="features">
+            <div class="container">
+                <h2>Возможности RiftCord</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h3>Статистика LoL</h3>
+                        <p>Получайте детальную статистику по играм, чемпионам и рейтингу прямо в Discord</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🛡️</div>
+                        <h3>Модерация</h3>
+                        <p>Мощные инструменты для управления вашим сервером и поддержания порядка</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎮</div>
+                        <h3>Развлечения</h3>
+                        <p>Миниигры, викторины и другие развлекательные функции для вашего сервера</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔐</div>
+                        <h3>Авторизация</h3>
+                        <p>Система ролей и прав доступа для эффективного управления участниками</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-<nav class="nav" id="nav">
-<a href="#features"><svg class="ico-sm"><use href="#ico-stats"></use></svg>Функции</a>
-<a href="#how"><svg class="ico-sm"><use href="#ico-mod"></use></svg>Подключение</a>
-<a href="#playground"><svg class="ico-sm"><use href="#ico-discord"></use></svg>Playground</a>
-<a href="#contact"><svg class="ico-sm"><use href="#ico-copy"></use></svg>Контакты</a>
-<a class="btn btn-primary" id="inviteBtn" href="https://discord.com/oauth2/authorize?client_id=1408071786545020979" target="_blank" rel="noopener noreferrer">
-<svg class="ico"><use href="#ico-invite"></use></svg>Пригласить
-</a>
-</nav>
+        <section id="commands" class="commands">
+            <div class="container">
+                <h2>Основные команды</h2>
+                <div class="commands-grid">
+                    <div class="command-category">
+                        <h3>League of Legends</h3>
+                        <ul>
+                            <li><code>/stats [никнейм]</code> - статистика игрока</li>
+                            <li><code>/match [id]</code> - информация о матче</li>
+                            <li><code>/champion [имя]</code> - информация о чемпионе</li>
+                            <li><code>/leaderboard</code> - таблица лидеров</li>
+                        </ul>
+                    </div>
+                    <div class="command-category">
+                        <h3>Модерация</h3>
+                        <ul>
+                            <li><code>/clear [количество]</code> - очистка сообщений</li>
+                            <li><code>/mute [участник]</code> - ограничение доступа</li>
+                            <li><code>/kick [участник]</code> - исключение с сервера</li>
+                            <li><code>/ban [участник]</code> - блокировка участника</li>
+                        </ul>
+                    </div>
+                    <div class="command-category">
+                        <h3>Развлечения</h3>
+                        <ul>
+                            <li><code>/meme</code> - случайный мем</li>
+                            <li><code>/quiz</code> - викторина по LoL</li>
+                            <li><code>/roll</code> - случайное число</li>
+                            <li><code>/coinflip</code> - подброс монетки</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
 
+        <section class="cta">
+            <div class="container">
+                <h2>Готовы улучшить свой Discord сервер?</h2>
+                <p>Добавьте RiftCord сегодня и получите доступ ко всем возможностям!</p>
+                <a href="https://discord.com/oauth2/authorize?client_id=1408071786545020979" class="btn btn-large">Добавить на сервер</a>
+            </div>
+        </section>
 
-<button class="hamburger" id="hamburger" aria-label="Открыть меню">
-<span></span><span></span><span></span>
-</button>
-</div>
-</header>
+        <section id="about" class="about">
+            <div class="container">
+                <h2>О проекте RiftCord</h2>
+                <p>RiftCord создан энтузиастами League of Legends для сообщества Discord. Наша цель - предоставить мощный, но простой в использовании инструмент, который объединяет лучшие аспекты League of Legends и Discord.</p>
+                <p>Бот постоянно обновляется и улучшается, чтобы предоставлять пользователям актуальную статистику и интересные функции.</p>
+            </div>
+        </section>
 
+        <section id="contact" class="contact">
+            <div class="container">
+                <h2>Свяжитесь с нами</h2>
+                <p>Есть вопросы или предложения? Напишите нам!</p>
+                <div class="contact-info">
+                    <a href="mailto:AlexDzsv@yandex.ru" class="contact-link">
+                        <span>✉️</span> AlexDzsv@yandex.ru
+                    </a>
+                    <a href="https://dsc.gg/riftcord-lol" class="contact-link">
+                        <span>🛡️</span> Официальный сервер Discord
+                    </a>
+                    <a href="https://github.com/Just2Lex/riftcord" class="contact-link">
+                        <span>🐙</span> GitHub репозиторий
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
 
-<main>
-<section class="hero">
-<div class="container hero-grid">
-<div class="hero-left">
-<h1>RiftCord — LoL статистика и инструменты прямо в Discord</h1>
-<p class="lead">Привязывай аккаунты Riot, смотри профили, управляй сообществом и поднимай активность — всё это удобно и красиво в одном боте.</p>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <div class="logo">
+                        <img src="assets/images/riftcord-logo.png" alt="RiftCord Logo">
+                        <span>RiftCord</span>
+                    </div>
+                    <p>Мощный Discord бот для League of Legends</p>
+                </div>
+                <div class="footer-links">
+                    <a href="https://github.com/Just2Lex/riftcord">GitHub</a>
+                    <a href="https://dsc.gg/riftcord-lol">Discord</a>
+                    <a href="mailto:AlexDzsv@yandex.ru">Контакты</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2023 RiftCord. Не аффилирован с Riot Games или Discord.</p>
+            </div>
+        </div>
+    </footer>
 
-
-<div class="hero-cta">
-<a class="btn btn-primary btn-lg" id="heroInvite" href="https://discord.com/oauth2/authorize?client_id=1408071786545020979" target="_blank" rel="noopener noreferrer">
-<svg class="ico"><use href="#ico-discord"></use></svg>Пригласить в сервер
-</a>
-
-
-<a class="btn btn-ghost" href="https://dsc.gg/riftcord-lol" target="_blank" rel="noopener noreferrer">
-<svg class="ico"><use href="#ico-copy"></use></svg>Официальный сервер
-</a>
-
-
-<button class="btn btn-outline" id="copyLinkBtn"><svg class="ico"><use href="#ico-copy"></use></svg>Скопировать ссылку</button>
-</div>
-
-
-<ul class="hero-features">
-<li><svg class="ico-xs"><use href="#ico-stats"></use></svg> Рейтинги и матчи</li>
-<li><svg class="ico-xs"><use href="#ico-mod"></use></svg> Модерация</li>
-<li><svg class="ico-xs"><use href="#ico-discord"></use></svg> Привязка аккаунтов</li>
-<li><svg class="ico-xs"><use href="#ico-check"></use></svg> Мини-игры и викторины</li>
-</ul>
-</div>
-
-
-<aside class="hero-right glass">
-<div class="card-stats">
-<div class="card-header">
-<img src="assets/images/riftcord-logo.png" alt="RiftCord" class="mini-logo" />
+    <script src="assets/script.js"></script>
+</body>
+</html>
