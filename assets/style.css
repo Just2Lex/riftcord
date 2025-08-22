@@ -10,6 +10,8 @@
     --text-secondary: #b3b3b3;
     --accent: #00b0f4;
     --accent-lol: #c8aa6e;
+    --discord: #5865F2;
+    --riot: #D13639;
     --transition: all 0.3s ease;
 }
 
@@ -157,8 +159,21 @@ a:hover {
 /* Hero Section */
 .hero {
     padding: 120px 0 80px;
-    background: linear-gradient(135deg, rgba(30, 30, 30, 0.9) 0%, rgba(18, 18, 18, 1) 100%), url('images/background-pattern.png');
+    background: linear-gradient(135deg, rgba(30, 30, 30, 0.9) 0%, rgba(18, 18, 18, 1) 100%);
     background-size: cover;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('images/background-pattern.png');
+    opacity: 0.05;
 }
 
 .hero-content {
@@ -166,6 +181,8 @@ a:hover {
     align-items: center;
     justify-content: space-between;
     gap: 40px;
+    position: relative;
+    z-index: 1;
 }
 
 .hero-text {
@@ -176,18 +193,38 @@ a:hover {
     flex: 1;
     display: flex;
     justify-content: center;
+    align-items: center;
+    position: relative;
 }
 
 .hero-image img {
     max-width: 100%;
     border-radius: 20px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-    animation: float 3s ease-in-out infinite;
+    transition: var(--transition);
 }
 
-@keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-20px); }
+.hero-image img:hover {
+    transform: scale(1.03);
+}
+
+.hero-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: var(--primary);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(88, 101, 242, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(88, 101, 242, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(88, 101, 242, 0); }
 }
 
 .highlight {
@@ -204,7 +241,9 @@ a:hover {
 }
 
 .btn {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
     padding: 12px 24px;
     border-radius: 8px;
     font-weight: 600;
@@ -257,16 +296,33 @@ a:hover {
     flex-wrap: wrap;
 }
 
-.partner-logos img {
-    height: 60px;
-    opacity: 0.8;
+.partner-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
     transition: var(--transition);
-    filter: grayscale(100%);
 }
 
-.partner-logos img:hover {
-    opacity: 1;
-    filter: grayscale(0%);
+.partner-logo:hover {
+    transform: translateY(-5px);
+}
+
+.partner-logo i {
+    font-size: 3.5rem;
+}
+
+.partner-logo:nth-child(1) i {
+    color: var(--discord);
+}
+
+.partner-logo:nth-child(2) i {
+    color: var(--riot);
+}
+
+.partner-logo span {
+    font-weight: 600;
+    font-size: 1.2rem;
 }
 
 /* Features Section */
@@ -287,6 +343,25 @@ a:hover {
     text-align: center;
     transition: var(--transition);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover::before {
+    transform: scaleX(1);
 }
 
 .feature-card:hover {
@@ -295,8 +370,9 @@ a:hover {
 }
 
 .feature-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--primary);
 }
 
 .feature-card h3 {
@@ -321,13 +397,31 @@ a:hover {
     padding: 25px;
     border-radius: 12px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transition: var(--transition);
+}
+
+.command-category:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+}
+
+.category-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 1.5rem;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--primary);
+}
+
+.category-header i {
+    font-size: 2rem;
+    color: var(--primary);
 }
 
 .command-category h3 {
     color: var(--accent);
-    margin-bottom: 1.5rem;
-    padding-bottom: 10px;
-    border-bottom: 2px solid var(--primary);
+    margin-bottom: 0;
 }
 
 .command-category ul {
@@ -338,6 +432,11 @@ a:hover {
     margin-bottom: 15px;
     padding-left: 25px;
     position: relative;
+    transition: var(--transition);
+}
+
+.command-category li:hover {
+    color: var(--accent);
 }
 
 .command-category li::before {
@@ -353,6 +452,43 @@ a:hover {
     border-radius: 4px;
     color: var(--primary);
     font-family: 'Montserrat', monospace;
+}
+
+/* Stats Section */
+.stats {
+    padding: 80px 0;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 30px;
+    background-color: var(--surface);
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transition: var(--transition);
+}
+
+.stat-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+}
+
+.stat-number {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    color: var(--text-secondary);
+    font-weight: 500;
 }
 
 /* CTA Section */
@@ -405,11 +541,22 @@ a:hover {
     font-size: 1.2rem;
     color: var(--text-primary);
     transition: var(--transition);
+    padding: 15px 25px;
+    background-color: var(--surface-light);
+    border-radius: 8px;
+    width: 100%;
+    max-width: 400px;
 }
 
 .contact-link:hover {
     color: var(--primary);
     transform: translateX(10px);
+    background-color: var(--surface);
+}
+
+.contact-link i {
+    font-size: 1.5rem;
+    color: var(--primary);
 }
 
 /* Footer */
@@ -439,6 +586,9 @@ a:hover {
 }
 
 .footer-links a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     color: var(--text-secondary);
 }
 
@@ -534,5 +684,14 @@ a:hover {
     
     .btn {
         width: 100%;
+        justify-content: center;
+    }
+    
+    .partner-logos {
+        gap: 30px;
+    }
+    
+    .partner-logo i {
+        font-size: 2.5rem;
     }
 }

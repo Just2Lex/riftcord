@@ -38,7 +38,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
 // Reveal elements on scroll
 function revealOnScroll() {
-    const elements = document.querySelectorAll('.feature-card, .command-category, .contact-link');
+    const elements = document.querySelectorAll('.feature-card, .command-category, .contact-link, .stat-item');
     
     elements.forEach(element => {
         const elementTop = element.getBoundingClientRect().top;
@@ -55,7 +55,7 @@ window.addEventListener('scroll', revealOnScroll);
 window.addEventListener('load', revealOnScroll);
 
 // Add active class to elements for animation
-document.querySelectorAll('.feature-card, .command-category, .contact-link').forEach(element => {
+document.querySelectorAll('.feature-card, .command-category, .contact-link, .stat-item').forEach(element => {
     element.style.opacity = '0';
     element.style.transform = 'translateY(20px)';
     element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
@@ -69,7 +69,7 @@ const originalRevealOnScroll = revealOnScroll;
 revealOnScroll = function() {
     originalRevealOnScroll();
     
-    document.querySelectorAll('.feature-card, .command-category, .contact-link').forEach(element => {
+    document.querySelectorAll('.feature-card, .command-category, .contact-link, .stat-item').forEach(element => {
         const elementTop = element.getBoundingClientRect().top;
         const elementVisible = 150;
         
@@ -80,17 +80,37 @@ revealOnScroll = function() {
     });
 };
 
-// Partner logos animation
-const partnerLogos = document.querySelectorAll('.partner-logos img');
-partnerLogos.forEach(logo => {
-    logo.addEventListener('mouseenter', () => {
-        logo.style.transform = 'scale(1.1)';
-    });
+// Animate stats counter
+function animateCounter() {
+    const counters = document.querySelectorAll('.stat-number');
+    const speed = 200;
     
-    logo.addEventListener('mouseleave', () => {
-        logo.style.transform = 'scale(1)';
+    counters.forEach(counter => {
+        const target = +counter.getAttribute('data-count');
+        const count = +counter.innerText;
+        const increment = Math.ceil(target / speed);
+        
+        if (count < target) {
+            counter.innerText = Math.min(count + increment, target);
+            setTimeout(() => animateCounter(), 1);
+        }
     });
-});
+}
+
+// Initialize counter animation when stats section is in view
+const statsSection = document.querySelector('.stats');
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            animateCounter();
+            observer.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.5 });
+
+if (statsSection) {
+    observer.observe(statsSection);
+}
 
 // Current year for footer
 document.addEventListener('DOMContentLoaded', function() {
@@ -100,4 +120,11 @@ document.addEventListener('DOMContentLoaded', function() {
     if (yearElement) {
         yearElement.textContent = yearElement.textContent.replace('2023', currentYear);
     }
+});
+
+// Interactive command list
+document.querySelectorAll('.command-category li').forEach(item => {
+    item.addEventListener('click', () => {
+        item.classList.toggle('expanded');
+    });
 });
